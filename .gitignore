@@ -7,3 +7,11 @@ __pycache__
 # Jupyter notebook
 .ipynb_checkpoints
 *.ipynb
+
+
+# .tex aux files
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
