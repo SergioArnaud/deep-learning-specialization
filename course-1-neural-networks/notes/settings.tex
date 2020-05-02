@@ -1,0 +1,54 @@
+\documentclass[12 pt]{article}
+
+% Basic
+\usepackage[utf8]{inputenc}
+% \usepackage[spanish,mexico]{babel}
+
+% Don't indent paragraphs, leave some space between them
+\usepackage{parskip}
+\usepackage{enumitem}
+
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{breqn}
+\usepackage{cancel}
+\usepackage{etoolbox}
+\usepackage{float}
+
+
+% For neural networks
+\usepackage{tikz}
+\usetikzlibrary{matrix,chains,positioning,decorations.pathreplacing,arrows}
+
+% Headers
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\setlength{\headheight}{40pt}
+
+% Commands
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+
+%Images
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \scalebox{.75}{\import{./figures/}{#1.pdf_tex}}
+}
+
+\newtheorem{teo}{Teorema}
+\newtheorem{lema}{Lemma}
+
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\blacksquare$}
+  \begin{proof}[Proof]}
+  {\end{proof}}
+\renewcommand\qedsymbol{$\blacksquare$}
