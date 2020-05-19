@@ -210,8 +210,54 @@ your test set with this same $\mu$ and $\sigma^2$ values.
 \end{figure}
 
 \subsection*{Vanishing / Exploding gradients}
+One of the problems of training neural network, especially very deep neural networks, 
+is vanishing and exploding gradients, that is, the derivatives can get either 
+very big or very small; this makes the training very difficult.
 
+\textbf{Weight Initialization for Deep Networks:} Usually a better or more careful
+choice of the random initialization for the neural network can address the problem of
+vanishing and exploding gradients.
 
+The recomenended initialization of the weights matrix at the $l$ layer is:
+\begin{align*}
+    W^{[l]} &\sim N\left(0, \frac{2}{n^{[l-1]}}\right) && \text{for relu activations} \\
+    W^{[l]} &\sim N\left(0, \sqrt{\frac{1}{n^{[l-1]}}}\right) && \text{for tanh activations} \\
+\end{align*}
+In this way each $W$ matrix has a norm near to 1 for each layer $l$ trying to prevent
+the gradients to vanish or explode to quickly.
 
+\subsection*{Gradient checking}
+When implementing backpropagation there's a test called \textit{gradient checking} that
+can help you to make sure that your implementation of backpropagation is correct. In 
+order to aproach this test we need to introduce first a way tu approach numerically 
+the gradients.
+
+\textbf{Numerical approximation of gradients:} We can use the forward difference where, 
+for $\varepsilon > 0$ :
+\begin{align*}
+    \frac{f(\theta + \varepsilon) - f(\theta)}{\varepsilon} = f'(\theta) + O(\varepsilon)
+\end{align*}
+A better expression is the central (two sided) difference where:
+\begin{align*}
+    \frac{f(\theta + \varepsilon) - f(\theta - \varepsilon)}{2 \varepsilon} = f'(\theta) + O(\varepsilon^2)
+\end{align*}
+Notice that now the error is $O(\epsilon^2)$ instead of $O(\epsilon)$. There are also
+Higher-order differences that might give a better approximation but are also more complicated
+to calculate.
+
+\textbf{Gradient checking procedure:}
+
+\begin{enumerate}
+    \item Reshape $W^{[1]}, b^{[1]}, ..., W^{[L]}, b^{[L]}$ into a single vector $\theta$
+    \item Reshape $dW^{[1]}, db^{[1]}, ..., dW^{[L]}, db^{[L]}$ into a single vector $d\theta$
+    \item Compute $\hat{d\theta_i} = \dfrac{J(\theta_1, ..., \theta_i+\varepsilon + ...) - J(\theta_1, ..., \theta_i-\varepsilon + ...)}{2 \varepsilon}$
+    \item Compute $\delta = \dfrac{ \|\hat{d\theta_i} - d\theta_i\|}{\| \hat{d\theta_i} \| + \| d\theta_i \|}$.
+    \item If $\delta$ is smaller than $\varepsilon$ there's no reason to woerry, if it's 
+    around epsilon its okay but double check your backpropagation algorithm and if it's 
+    much bigger than epsilon then it might be a bug.
+\end{enumerate}
+
+It's important not to use it in training (it's really slow). It should be used just 
+to debug the implementation.
 
 \end{document}
