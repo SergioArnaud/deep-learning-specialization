@@ -41,6 +41,10 @@ to prioritize next steps.
 
 \section*{Mismatched training and dev/test sets}
 
+You might want to (purposely) use train and dev/test sets with different distributions since
+sometimes you can't gather enough data to train your system and you might get data from different
+sources to make a richer training. 
+
 \textbf{Bias and Variance with mismatched data distributions} When training and testing 
 data comes from different distributions you can no longer draw the conclusion that the 
 algorithm is not generalizing if your dev error ir much bigger than the train error. 
@@ -50,7 +54,59 @@ as the training (but it's not used for training). Looking at this error you can 
 have a generalization problem (your training-dev error is similar to the dev error) or a
 distribution problem (you training-dev is small so the problem is because of the data mismatching)
 
+\textbf{Addressing data mismatch}  Carry out manual error analysis and try to make the training
+data more similar or so that it resambles the kind of data that produced the mistakes.
 
+\section*{Transfer learning}
 
+One of the most powerful ideas in deep learning is that sometimes you can take knowledge 
+the neural network has learned from one task and apply that knowledge to a separate task.
+This is knonw as transfer learning.
+
+The basic idea is to take a neural network that was trained for a particular task, remove
+the last layer and train it for the new (similar) task. Usually this is called \textit{finetuning}. 
+
+When does transfer learning makes sense? Transfer learning makes sense when you have a 
+lot of data for the problem you're transferring from and usually relatively less 
+data for the problem you're transferring to. In general:
+
+\begin{itemize}
+    \item Task A ans task B have the same input x.
+    \item You have a lot mode data for task A than for task B. 
+    \item Low level features from A could be helpfull for learning B.
+\end{itemize}
+
+\section*{Multi task learning}
+
+So whereas in transfer learning, you have a sequential process where you learn from 
+task A and then transfer that to task B. In multi-task learning, you start off 
+simultaneously, trying to have one neural network do several things at the same time. 
+And then each of these task helps hopefully all of the other task.
+
+When does multi-task learning makes sense?
+
+\begin{itemize}
+    \item Training on a set of tasks that could benefit from havind shared lower level
+    features. 
+    \item Usually: Amount of data you have for each task is quite similar. 
+    \item Can train a big neural network to do well on all tasks. 
+\end{itemize}
+
+\section*{End-to-end deep learning}
+
+There have been some data processing systems, or learning systems that require multiple 
+stages of processing. And what end-to-end deep learning does, is it can take all those 
+multiple stages, and replace it usually with just a single neural network.
+
+\textbf{Pros and cons of end-to-end deep learning}
+\begin{itemize}
+    \item Pro: Let the data speak
+    \item Pro: Less hand-designing of components needed.
+    \item Con: May need large amounts of data. 
+    \item Con: Excludes potentially useful hand-designed components. 
+\end{itemize}
+
+Key question: Do I have sufficient data to learn a function od the complexity needed
+to map x to y?
 
 \end{document}
